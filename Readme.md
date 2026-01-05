@@ -1,154 +1,170 @@
-# Handle Failed Payment Renewals with AI Analysis, Jira Tickets and Slack Alerts
 
-This workflow automates failed subscription renewal processing by validating webhook data, using AI to analyze urgency and churn risk, creating a Jira Finance Task, and notifying your finance team via Slack. If required fields are missing, it sends an error alert for manual review instead. :contentReference[oaicite:1]{index=1}
+# Handle Failed Payment Renewals with AI Analysis, Jira Tickets, and Slack Alerts
+
+This n8n workflow automates failed subscription renewal handling by validating webhook data, using AI to analyze urgency and churn risk, creating a Jira Finance task, and notifying your finance team via Slack.
+If required fields are missing, it sends a detailed error alert for manual review.
 
 ---
 
 ## ⚡ Quick Implementation Steps (Start Using in 60 Seconds)
 
 1. Import the workflow JSON into your n8n instance.
-2. Add **Jira** & **Slack** credentials.
-3. Configure your payment provider to POST to the webhook path `/payment-failed-renewal`.
-4. Test with a sample payload, e.g.:
+2. Add **Jira** and **Slack** credentials.
+3. Configure your payment provider to send a POST request to:
+   `/payment-failed-renewal`
+4. Test using a sample payload:
 
-   ```json
-   {
-     "customerId": "C-101",
-     "customerEmail": "[email protected]",
-     "subscriptionId": "S-500",
-     "amount": 39.99
-   }
-   ```
+```json
+{
+  "customerId": "C-101",
+  "customerEmail": "[email protected]",
+  "subscriptionId": "S-500",
+  "amount": 39.99
+}
+```
 
-5. Activate the workflow. :contentReference[oaicite:2]{index=2}
+5. Activate the workflow.
 
 ---
 
 ## What It Does
 
-When a subscription renewal fails:
+When a subscription renewal fails, the workflow:
 
-- A webhook receives the payment failure payload.
-- The workflow validates required fields.
-- Uses **OpenAI** to analyze the failure reason, urgency, and churn risk.
-- Routes high-value failures to a high-priority path.
-- Creates a **Jira Finance Task** with an AI-generated recovery email draft.
-- Sends a **Slack alert** to your finance channel with churn risk details.
-- If required data is missing, it sends a detailed error alert instead. :contentReference[oaicite:3]{index=3}
+* Receives the payment failure via webhook
+* Validates required fields
+* Uses **AI (OpenAI or compatible LLM)** to assess urgency and churn risk
+* Routes high-value failures to a priority path
+* Creates a **Jira Finance Task** with an AI-generated recovery email draft
+* Sends a **Slack alert** with churn risk details
+* Sends an **error alert** if required data is missing
 
 ---
 
 ## Who’s It For
 
-- Finance & billing teams automating revenue recovery.
-- SaaS businesses with recurring billing.
-- Support teams using **Jira** for billing operations.
-- Slack-centric finance or ops teams.
-- Companies wanting automated churn risk insights. :contentReference[oaicite:4]{index=4}
+* Finance and billing teams automating revenue recovery
+* SaaS businesses with recurring subscriptions
+* Support or ops teams using **Jira** for billing workflows
+* Slack-centric finance and operations teams
+* Companies seeking AI-powered churn risk insights
 
 ---
 
 ## Requirements
 
-- n8n instance (cloud or self-hosted)
-- **OpenAI API key** (or another LLM credential)
-- **Jira Software** account with access to the FIN project
-- **Slack bot token** with permission to post messages
-- A **payment provider** that supports JSON webhook delivery
-- Webhook configured at: `https://YOUR-N8N-URL/webhook/payment-failed-renewal` :contentReference[oaicite:5]{index=5}
+* n8n (cloud or self-hosted)
+* **OpenAI API key** (or another LLM provider)
+* **Jira Software** account with access to the Finance project
+* **Slack bot token** with permission to post messages
+* A payment provider that supports JSON webhooks
+* Webhook endpoint configured at:
+  `https://YOUR-N8N-URL/webhook/payment-failed-renewal`
 
 ---
 
-## How It Works & How To Set Up
+## How It Works & Setup Flow
 
-### Step-by-Step Flow
+### Step-by-Step Process
 
-1. **Webhook Trigger** receives the JSON payload from your payment provider.
-2. **Validation Node** checks for required fields:
-   - `customerId`
-   - `customerEmail`
-   - `subscriptionId`
-   - `amount`
-3. **AI Analysis (OpenAI)** investigates the failure, determines urgency and churn risk, and drafts a suggested recovery email.
-4. A **Switch Node** routes high-value payments (e.g., > $500) to a high-priority path.
-5. A **Jira Finance Task** is created with the AI draft.
-6. A **Slack alert** is sent with the churn risk score and key details. :contentReference[oaicite:6]{index=6}
+1. **Webhook Trigger**
+   Receives the payment failure payload from the payment provider.
+
+2. **Payload Validation**
+   Confirms the presence of required fields:
+
+   * `customerId`
+   * `customerEmail`
+   * `subscriptionId`
+   * `amount`
+
+3. **AI Analysis**
+   Evaluates failure context, urgency, and churn risk, and generates a suggested recovery email.
+
+4. **Routing Logic**
+   A switch node routes high-value failures (e.g., amount > $500) to a priority handling path.
+
+5. **Jira Task Creation**
+   Creates a Finance task with AI-generated insights and recovery steps.
+
+6. **Slack Notification**
+   Sends a structured alert with churn risk, amount, and customer details.
 
 ---
 
-## How To Customize Nodes
+## Node Customization Guide
 
-### Webhook
+### Webhook Node
 
-- Add **Basic Auth** or token security to validate senders.
-- Add JSON schema validation for stricter input handling. :contentReference[oaicite:7]{index=7}
+* Add token-based security or Basic Auth
+* Apply JSON schema validation for stricter payload checks
 
-### Validate Payload
+### Validation Logic
 
-- Enforce email format validation.
-- Validate numeric `amount`.
-- Add fallback values if some fields are optional. :contentReference[oaicite:8]{index=8}
+* Enforce valid email format
+* Ensure `amount` is numeric
+* Define optional fallback values if needed
 
 ### Jira Node
 
-Customize:
+You can customize:
 
-- Summary and description structure
-- Add custom labels (e.g., `billing-recovery`, `urgent`)
-- Include additional custom Jira fields
-- Change issue type or target project :contentReference[oaicite:9]{index=9}
+* Issue summary and description format
+* Labels such as `billing-recovery`, `urgent`
+* Custom Jira fields
+* Issue type or target project
 
-### Slack Nodes
+### Slack Node
 
-Enhance:
+Enhancements include:
 
-- Add role mentions (like `@finance-team`)
-- Use rich blocks or attachments
-- Route alerts to multiple channels if needed :contentReference[oaicite:10]{index=10}
+* Role or user mentions (e.g., `@finance-team`)
+* Rich message blocks
+* Multiple channel routing
 
 ---
 
-## Add-Ons (Optional Enhancements)
+## Optional Add-Ons
 
-- **Automated Customer Email** for payment recovery.
-- **Escalation Rules** — Retry counts (e.g., ≥3 attempts → escalate).
-- Log data in **Airtable** or **Google Sheets** for reporting.
-- Push events into CRMs like **HubSpot**, **Salesforce**, or **Zoho**.
-- **Sales Alerts** for high-value account failures. :contentReference[oaicite:11]{index=11}
+* **Automated customer recovery emails**
+* **Escalation rules** (e.g., ≥3 failures → escalate)
+* Store records in **Google Sheets** or **Airtable**
+* Push data to CRMs like **HubSpot**, **Salesforce**, or **Zoho**
+* **Sales alerts** for high-value account failures
 
 ---
 
 ## Use Case Examples
 
-1. Failed Stripe subscription renewal → Jira task + Slack finance alert.
-2. Chargebee retry attempts exhausted → automatic Slack alert for escalation.
-3. Declined credit card → AI-drafted recovery task in Jira.
-4. RazoryPay or PayPal renewal failure → automated follow-up reminder.
-5. Incomplete webhook payload → Slack error message for manual review. :contentReference[oaicite:12]{index=12}
+1. Stripe subscription renewal failure → Jira task + Slack alert
+2. Chargebee retry attempts exhausted → automated escalation
+3. Declined credit card → AI-drafted recovery task
+4. Razorpay or PayPal renewal failure → finance notification
+5. Incomplete webhook payload → Slack error alert for manual review
 
 ---
 
 ## Troubleshooting Guide
 
-| Issue                                | Possible Cause                         | Solution                                                     |
-| ------------------------------------ | -------------------------------------- | ------------------------------------------------------------ | --------------------------------------- |
-| Webhook not triggering               | Incorrect webhook URL or HTTP method   | Confirm URL and use POST                                     |
-| Jira ticket not created              | Missing permissions or invalid payload | Check Jira credentials and required fields                   |
-| Slack shows undefined values         | Payload missing fields                 | Verify payload includes all required keys                    |
-| Error alert triggered incorrectly    | Field names mismatch                   | Ensure exact field names like `customerId`, `subscriptionId` |
-| Payment provider doesn’t send events | Firewall/CDN blocking POST requests    | Whitelist your n8n webhook URL                               |
-| Workflow not activating              | Workflow is turned OFF                 | Enable the workflow                                          | :contentReference[oaicite:13]{index=13} |
+| Issue                             | Possible Cause                    | Solution                                           |
+| --------------------------------- | --------------------------------- | -------------------------------------------------- |
+| Webhook not triggering            | Incorrect URL or HTTP method      | Verify endpoint and ensure POST is used            |
+| Jira ticket not created           | Permission or payload issue       | Check Jira credentials and required fields         |
+| Slack shows undefined values      | Missing payload fields            | Ensure all required keys are included              |
+| Error alert triggered incorrectly | Field name mismatch               | Use exact keys like `customerId`, `subscriptionId` |
+| Payment events not received       | Firewall or CDN blocking requests | Whitelist your n8n webhook URL                     |
+| Workflow not running              | Workflow not activated            | Enable the workflow                                |
 
 ---
 
 ## Need Help?
 
-If you want help customizing or expanding this automation — such as adding CRM integration, advanced churn scoring, escalation logic, or enhanced recovery messaging — the **WeblineIndia** automation experts can assist with:
+If you’d like help extending this workflow—such as adding CRM integrations, advanced churn scoring, retry logic, or automated recovery emails—the **WeblineIndia** automation experts can assist with:
 
-- Jira & Slack automation pipelines
-- Payment webhook integrations
-- Finance workflow optimization
-- AI-driven billing insights
-- End-to-end automation solutions
+* Jira and Slack automation pipelines
+* Payment webhook integrations
+* AI-powered billing insights
+* Finance workflow optimization
+* End-to-end automation solutions
 
-Reach out anytime for expert support! :contentReference[oaicite:14]{index=14}
+Reach out anytime for expert support 🚀
